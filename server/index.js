@@ -2,27 +2,11 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { connectDb } from "./config/db.js";
+import { typeDefs } from "./Schema/typeDefs.js";
+import { resolvers } from "./Schema/resolver.js";
 
-const typeDefs =`
-type User{
-  id:ID!
-  name:String!
-  email:String!
-}
-  type Query {
-    getuser: [User]
-  }
 
-type Mutation{
-createUser(name:String!,email:String!):User
-}
-`;
 
-const resolvers = {
-  Query: {
-    getuser: () => users
-  }
-};
 connectDb();
 const server = new ApolloServer({ typeDefs, resolvers });
 
