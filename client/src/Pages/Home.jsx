@@ -29,11 +29,7 @@ const Home = () => {
       console.log(err);
     }
 
-    // let senddata = await apiurl.post()
-    // // Example: Simulate API request
-    // await new Promise((res) => setTimeout(res, 500));
-
-    // Return the next state
+   
     return { message: `User ${name} added successfully!` };
   };
 
