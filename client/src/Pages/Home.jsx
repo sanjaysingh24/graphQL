@@ -1,15 +1,37 @@
 import React from 'react';
 import { useActionState } from 'react';
+import { apiurl } from '../../utils/services/ApiUrl';
 
 const Home = () => {
   const handleclick = async (prevState, formData) => {
     const name = formData.get('name');
     const email = formData.get('email');
 
-    console.log("Form submitted:", name, email);
+    const mutation =`
+    mutation CreateUser($name: String!, $email: String!) {
+     createUser(name: $name, email: $email) {
+     id
+     name
+     email
+     Success
+     }
+    }
+    `;
+    try{
+        let send = await apiurl.post('',{
+          query: mutation,
+          variables: { name, email }
+        })
+        const{data} = send;
+        console.log(send);
 
-    // Example: Simulate API request
-    await new Promise((res) => setTimeout(res, 500));
+    }catch(err){
+      console.log(err);
+    }
+
+    // let senddata = await apiurl.post()
+    // // Example: Simulate API request
+    // await new Promise((res) => setTimeout(res, 500));
 
     // Return the next state
     return { message: `User ${name} added successfully!` };

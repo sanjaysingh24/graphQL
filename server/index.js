@@ -1,17 +1,33 @@
-// index.js
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import express from "express";
+import cors from "cors";
+import { createHandler } from "graphql-http/lib/use/express";
+
 import { connectDb } from "./config/db.js";
-import { typeDefs } from "./Schema/typeDefs.js";
+import schema from "./Schema/typeDefs.js";
 import { resolvers } from "./Schema/resolver.js";
-
-
-
+const port = 3000;
 connectDb();
-const server = new ApolloServer({ typeDefs, resolvers });
 
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 3000 },
+// GraphQL Schema
+
+
+
+const app = express();
+
+// Enable CORS
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// GraphQL endpoint
+app.all(
+  "/graphql",
+  createHandler({
+    schema: schema,
+    rootValue: resolvers,
+    graphiql: true, // built-in GraphiQL IDE
+  })
+);
+
+app.listen(port, () => {
+  console.log("🚀 Server ready at http://localhost:4000/graphql");
 });
-
-console.log(`🚀 Server ready at ${url}`);

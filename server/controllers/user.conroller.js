@@ -13,11 +13,13 @@ export const getuserbyId =async(id)=>{
     console.log("User found:", save);
 }
 export const creatUser =async(name,email)=>{
+    
     const user = new User({username: name, email: email});
      const saved = await user.save();
       return {
         id: saved._id,
         name: saved.username, // map here
-        email: saved.email
+        email: saved.email,
+        Success:true
       };
 }
