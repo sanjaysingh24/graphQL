@@ -1,25 +1,16 @@
 import React from 'react';
 import { useActionState } from 'react';
 import { apiurl } from '../../utils/services/ApiUrl';
-
+import { Addusermutation } from '../../utils/services/mutations';
 const Home = () => {
   const handleclick = async (prevState, formData) => {
     const name = formData.get('name');
     const email = formData.get('email');
 
-    const mutation =`
-    mutation CreateUser($name: String!, $email: String!) {
-     createUser(name: $name, email: $email) {
-     id
-     name
-     email
-     Success
-     }
-    }
-    `;
+
     try{
         let send = await apiurl.post('',{
-          query: mutation,
+          query: Addusermutation,
           variables: { name, email }
         })
         const{data} = send;

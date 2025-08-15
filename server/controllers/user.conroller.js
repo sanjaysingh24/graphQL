@@ -65,3 +65,22 @@ export const updateUser = async(id,name,email)=>{
         return err;
     }
 }
+
+export const deleteUser = async(id)=>{
+    try{
+       let check = await User.findById(id);
+       if(!check){
+           return {message: "User not found"};
+        }
+        else{
+            let deleteuser = await User.findByIdAndDelete(id);
+            return{
+                name: deleteuser.username, // map here
+                message: "Successfully deleted user",
+                Success: true
+            }
+        }
+    }catch(err){
+        return err;
+    }
+}

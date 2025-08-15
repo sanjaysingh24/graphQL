@@ -1,4 +1,4 @@
-import { getuserbyId, creatUser, allusers, updateUser } from "../controllers/user.conroller.js";
+import { getuserbyId, creatUser, allusers, updateUser, deleteUser } from "../controllers/user.conroller.js";
 
 // The keys here must match schema function names exactly
 export const resolvers = {
@@ -10,6 +10,9 @@ export const resolvers = {
   },
   updateUser:async({id,name,email})=>{
     return await updateUser(id,name,email);
+  },
+  deleteUser:async({id})=>{
+    return await deleteUser(id);
   },
   allUsers:async()=>{
     return await allusers()

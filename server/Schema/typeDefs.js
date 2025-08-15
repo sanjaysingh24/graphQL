@@ -21,7 +21,7 @@ Success:Boolean!
   type Mutation {
     createUser(name: String!, email: String!): User
     updateUser(id: ID!, name: String, email: String): UserResponse
-    deleteUser(id:ID!):User
+    deleteUser(id:ID!):UserResponse
   }
 `);
 

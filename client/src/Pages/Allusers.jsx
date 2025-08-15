@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { apiurl } from "../../utils/services/ApiUrl";
-
+import { deletemutation, updatemutation } from "../../utils/services/mutations";
 const Allusers = () => {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,16 +44,7 @@ const Allusers = () => {
 
   // Save updated user (GraphQL mutation can be used here)
   const handleSave = async () => {
-    const mutation =`
-    mutation updateUser($id:ID!,$name:String,$email:String){
-      updateUser(id:$id,name:$name,email:$email){
-    
-       name
-       message
-       Success
-  
-      }
-    }`;
+   
     const variables = {
       id: selectedUser.id,
       name: selectedUser.name,
@@ -61,15 +52,28 @@ const Allusers = () => {
     }
 
     let send = await apiurl.post('',{
-      query: mutation,
+      query: updatemutation,
       variables: variables
     })
-    console.log("Response from update:", send);
+    
     fetchUsers();
     // TODO: Call GraphQL mutation for update
     setIsModalOpen(false);
   };
+const handledelete =async(user)=>{
+  const{id} = user;
 
+  const  variables ={
+    id:id
+  }
+  let response = await apiurl.post('',{
+    query: deletemutation,
+    variables: variables
+  });
+  
+  fetchUsers();
+
+}
   return (
     <div style={{ padding: "20px" }}>
       <h2 style={{ marginBottom: "10px" }}>All Users</h2>
@@ -89,7 +93,7 @@ const Allusers = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
+          {users?.map((user, index) => (
             <tr key={user.id} style={{ borderBottom: "1px solid #ddd" }}>
               <td style={tdStyle}>{index + 1}</td>
               <td style={tdStyle}>{user.name}</td>
@@ -101,7 +105,7 @@ const Allusers = () => {
                 >
                   Update
                 </button>
-                <button style={deleteBtnStyle}>Delete</button>
+                <button onClick={()=>handledelete(user)} style={deleteBtnStyle}>Delete</button>
               </td>
             </tr>
           ))}
