@@ -23,14 +23,17 @@ const Home = () => {
           variables: { name, email }
         })
         const{data} = send;
-        console.log(send);
+       const{createUser} = data.data;
+       if(createUser.Success){
+return { message: `User ${name} added successfully!` };
+       }
 
     }catch(err){
       console.log(err);
     }
 
    
-    return { message: `User ${name} added successfully!` };
+    
   };
 
   const [state, formAction] = useActionState(handleclick, { message: '' });

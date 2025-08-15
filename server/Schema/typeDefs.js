@@ -7,13 +7,21 @@ const schema = buildSchema(`
     email: String!
     Success: Boolean!
   }
+type UserResponse{
+name:String!
+message:String!
+Success:Boolean!
+}
 
   type Query {
     getUser(id: ID!): User
+    allUsers:[User!]
   }
-
+  
   type Mutation {
     createUser(name: String!, email: String!): User
+    updateUser(id: ID!, name: String, email: String): UserResponse
+    deleteUser(id:ID!):User
   }
 `);
 

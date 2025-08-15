@@ -23,3 +23,45 @@ export const creatUser =async(name,email)=>{
         Success:true
       };
 }
+
+export const allusers = async()=>{
+    try{
+           let users = await User.find();
+           if(users.length === 0){
+               return {message: "No users found"};
+           }
+           else{
+            return users.map(user=>{
+                return {
+                    id: user._id,
+                    name: user.username, // map here
+                    email: user.email,
+                    Success:true
+                }
+            })
+           }
+
+    }catch(err){
+        return err;
+    }
+}
+export const updateUser = async(id,name,email)=>{
+    try{
+          // check user exists or not
+          let exist = await User.findById(id);
+          if(!exist){
+              return {message: "User not found"};
+          }else{
+            let updateuser = await User.findByIdAndUpdate(id, {username: name, email: email}, {new: true});
+        
+            return{
+                    
+                    name: updateuser.username, // map here
+                    message:"Successfully updated user",
+                    Success:true
+            }
+          }
+    }catch(err){
+        return err;
+    }
+}
