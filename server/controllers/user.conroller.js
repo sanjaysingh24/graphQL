@@ -19,7 +19,7 @@ export const creatUser =async(name,email)=>{
       return {
         id: saved._id,
         name: saved.username, // map here
-        email: saved.email,
+        message:"created Successfully",
         Success:true
       };
 }

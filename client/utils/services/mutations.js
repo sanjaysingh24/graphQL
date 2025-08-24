@@ -11,9 +11,9 @@ Success
  export const Addusermutation =`
     mutation CreateUser($name: String!, $email: String!) {
      createUser(name: $name, email: $email) {
-     id
+    
      name
-     email
+     message
      Success
      }
     }
