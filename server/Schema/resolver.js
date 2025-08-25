@@ -18,7 +18,7 @@ export const resolvers = {
   allUsers:async()=>{
     return await allusers()
   },
-  addproduct:async(name,price,description)=>{
+  addproduct:async({name,price,description})=>{
     return await addProduct(name,price,description)
   }
   
