@@ -22,6 +22,8 @@ Description:String
 
 type ProductResponse{
 name:String,
+price:Int,
+Description:String,
 message:String,
 Success:Boolean!
 }
@@ -30,6 +32,7 @@ Success:Boolean!
   type Query {
     getUser(id: ID!): User
     allUsers:[User!]
+    allproducts:[Product!]
   }
   
   type Mutation {
